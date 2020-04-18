@@ -1,0 +1,149 @@
+body {
+    background-color: #fdfdfd;
+    height: 100vh;
+    text-align: center;
+    justify-content: center;
+    font-family: 'Work Sans', sans-serif;
+
+}
+
+svg {
+    grid-row: 2;
+    /* grid-column: 2; */
+}
+
+rect {
+    fill: #F3B124;
+}
+
+.heading {
+    margin: 1rem;
+}
+
+.filter-container {
+    width: 80vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+/* Tooltip */
+div.tooltip {	
+    position: absolute;			
+    text-align: left;
+    max-width: 12rem;					
+    min-height: 5px;					
+    padding: .6rem;				
+    font: .8rem sans-serif;		
+    background: rgb(255, 255, 255, .9);	
+    border: 1px;
+    border-radius: 3px;			
+    pointer-events: none;	
+    box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.75);
+    font-family: 'Work Sans', sans-serif;
+		
+}
+
+/* Axis */
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #867C75;
+    stroke-width: 2;
+}
+
+.axis text {
+    stroke: #867C75;
+}
+
+.axis-label {
+    stroke: #867C75;
+    font-size: 0.8rem;
+}
+
+
+
+/* Menu */
+.btn-group button {
+    background-color: #F3B124;
+    border: none;
+    color: white;
+    padding: 10px 24px; /* Some padding */
+    margin: 5px;
+    cursor: pointer; /* Pointer/hand icon */
+    float: left; /* Float the buttons side by side */
+    font-size: .8rem;
+    border-radius: .2rem;
+    text-transform: uppercase;
+    transition: transform .1s
+}
+  
+  .btn-group button:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+  }
+  
+  /* Clear floats (clearfix hack) */
+  .btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  
+  /* Add a background color on hover */
+  .btn-group button:hover {
+    transform: scale(1.03)
+  }
+
+  button:focus {outline:0;}
+
+  
+.demographic-tag {
+    padding: 7px 14px;
+    background-color: #eeeeee;
+    border: solid 1px #ddd;
+    border-radius: 2rem;
+}
+
+/* bootstrap override */
+.modal-content {
+    padding: 1rem;
+    border-radius: .5rem;
+    border: none;
+}
+
+.modal-header {
+    border: 0px;
+    padding: 0px;
+}
+
+.modal-body {
+    text-align: left;
+}
+
+.modal-footer {
+    border: 0px;
+    justify-content: flex-start;
+    font-size: .8rem;
+}
+
+/* filters */
+.filters {
+    transform: scale(0.8)
+}
+.custom-control {
+    padding: 7px 14px 7px 37px;
+    background-color: #eeeeee;
+    border: solid 1px #ddd;
+    border-radius: 2rem;
+}
+.custom-control-inline {
+    margin: 0.2rem 0rem;
+}
+
+.is-active {
+    opacity: 100%;
+    transition: opacity .1s;
+  }
+
+.is-inactive {
+    opacity: 30%;
+    transition: opacity .1s;
+}

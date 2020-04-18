@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="heading">
+        <h1>happy moments</h1>
+    </div>
+    <div class="filter-container">
+        <div form class="filters">
+            <div class="row">
+                <div class="col-md">
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input type="checkbox" id="customRadioFemale" name="customRadioFemale" class="custom-control-input"
+                            onclick="updateFilter()" checked>
+                        <label class="custom-control-label" for="customRadioFemale">Female</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input type="checkbox" id="customRadioMale" name="customRadioMale" class="custom-control-input"
+                            onclick="updateFilter()" checked>
+                        <label class="custom-control-label" for="customRadioMale">Male</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input type="checkbox" id="customRadioSingle" name="customRadioSingle" class="custom-control-input"
+                            onclick="updateFilter()" checked>
+                        <label class="custom-control-label" for="customRadioSingle">Single</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input type="checkbox" id="customRadioMarried" name="customRadioMarried" class="custom-control-input"
+                            onclick="updateFilter()" checked>
+                        <label class="custom-control-label" for="customRadioMarried">Married</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input type="checkbox" id="customRadioDivorced" name="customRadioDivorced" class="custom-control-input"
+                            onclick="updateFilter()" checked>
+                        <label class="custom-control-label" for="customRadioDivorced">Divorced</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input type="checkbox" id="customRadioSeparated" name="customRadioSeparated" class="custom-control-input"
+                            onclick="updateFilter()" checked>
+                        <label class="custom-control-label" for="customRadioSeparated">Separated</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input type="checkbox" id="customRadioWidowed" name="customRadioWidowed" class="custom-control-input"
+                            onclick="updateFilter()" checked>
+                        <label class="custom-control-label" for="customRadioWidowed">Widowed</label>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input type="checkbox" id="customRadioParent" name="customRadioParent" class="custom-control-input"
+                            onclick="updateFilter()" checked>
+                        <label class="custom-control-label" for="customRadioParent">Parent</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input type="checkbox" id="customRadioNotParent" name="customRadioNotParent" class="custom-control-input"
+                            onclick="updateFilter()" checked>
+                        <label class="custom-control-label" for="customRadioNotParent">Not Parent</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d3chart"></div>
+    <div class="btn-group">
+        <button class="category achievement" onclick="update('achievement')">Achievement</button>
+        <button class="category affection" onclick="update('affection')">Affection</button>
+        <button class="category bonding" onclick="update('bonding')">Bonding</button>
+        <button class="category enjoy_the_moment" onclick="update('enjoy_the_moment')">Enjoy the Moment</button>
+        <button class="category exercise" onclick="update('exercise')">Exercise</button>
+        <button class="category leisure" onclick="update('leisure')">Leisure</button>
+        <button class="category nature" onclick="update('nature')">Nature</button>
+    </div>
+
+
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <div class="demographic-tag gender"></div>
+                    <div class="demographic-tag marital"></div>
+                    <div class="demographic-tag parenthood"></div>
+                    <div class="demographic-tag age"></div>
+                    <div class="demographic-tag country"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <script>
+        // Set some variables here
+        const minAge = 18;
+        const maxAge = 84;
+        const maxNum = 80;
+
+        var margin = { top: 20, right: 15, bottom: 60, left: 15 }
+            , width = 1100 - margin.left - margin.right
+            , height = 600 - margin.top - margin.bottom;
+
+        var x = d3.scaleLinear()
+            .domain([minAge, maxAge])
+            .range([0, width])
+        var y = d3.scaleLinear()
+            .domain([0, maxNum])
+            .range([height, 0]);
+
+        var chart = d3.select('.d3chart')
+            .append('svg')
+            .attr('width', width + margin.right + margin.left)
+            .attr('height', height + margin.top + margin.bottom)
+            .attr('class', 'chart')
+
+        var main = chart.append('g')
+            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+            .attr('width', width)
+            .attr('height', height)
+            .attr('class', 'main')
+
+        // draw the x axis
+        var xAxis = d3.axisBottom(x).tickPadding(6).tickSize(0);
+
+        main.append('g')
+            .attr('transform', 'translate(0,' + (height + 8.5) + ')')
+            .attr('class', 'main axis date')
+            .call(xAxis);
+
+        main.append("text")
+            .attr("transform", "translate(" + (width / 2) + " ," + (height + 40) + ")")
+            .style("text-anchor", "middle")
+            .attr('class', 'axis-label')
+            .text("Age");
+
+        // draw the y axis
+        var yAxis = d3.axisLeft(y).tickSize(0);
+
+        // main.append('g')
+        //     .attr('transform', 'translate(0,0)')
+        //     .attr('class', 'main axis date')
+        //     .call(yAxis);
+
+        // TOOLTIP
+        // define the div for the tooltip
+        var div = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0)
+
+        //tooltip
+        // Define the div for the tooltip
+        var tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
+        var container = main.append("g")
+
+        function update(category) {
+            //update colors for the category buttons
+            $("button.category").css({ "background-color": "#867C75", "box-shadow": "none" });
+            $("button.category." + category).css({ "background-color": "#F3B124", "box-shadow": "inset 0 0 .3rem #aaa" });
+
+            // Load in data from csv
+            d3.csv("happy_moments_sampled_data_4000.csv").then(function (raw_data) {
+                var data = raw_data.filter(function (d) { return d.predicted_category === category; });
+
+                var dataByAge = d3.nest()
+                    .key(function (d) { return d.age; }).sortKeys(d3.ascending)
+                    .entries(data);
+                // console.log(JSON.stringify(dataByAge));
+
+                container.selectAll("g").remove() //clear container for new data
+                container.selectAll("g")
+                    .data(dataByAge, function (d) { return d.hmid; })
+                    .enter().append("g")
+                    .attr("class", "year")
+                    .attr("transform", function (d, i) { return `translate(${x(d.key)}, 0)`; })
+                    .each(function (year, j) {
+                        var thisYear = d3.select(this)
+                            .selectAll('rect')
+                            .data(d3.entries(d3.entries(dataByAge[j])[1].value), function (d) { return d.hmid; });
+
+                        thisYear.enter().append("rect")
+                            .attr("transform", function (d, i) { return `translate(0, ${y(i)})`; })
+                            .attr("x", 0)
+                            .attr("y", 0)
+                            .attr("rx", .7)
+                            .attr("ry", .7)
+                            .attr("height", 5)
+                            .attr("width", 12)
+                            .attr("data-toggle", "modal")
+                            .attr("data-target", "#myModal")
+                            .on("mouseover", function (d) {
+                                // highlight rect 
+                                d3.select(this).style("fill", function () {
+                                    return d3.color('#AEDD31');
+                                });
+                                // make rect expand
+                                var w = +d3.select(this).attr("width");
+                                d3.select(this).attr("x", +d3.select(this).attr("x") - .5).attr("width", w + 1);
+                                var h = +d3.select(this).attr("height");
+                                d3.select(this).attr("y", +d3.select(this).attr("y") - .5).attr("height", h + 1);
+                                // tooltip
+                                tooltip.transition()
+                                    .duration(30)
+                                    .style("opacity", 1)
+                                tooltip.html("&ldquo;" + d.value.cleaned_hm + "&rdquo;")
+                                    .style("left", (d3.event.pageX + 15) + "px")
+                                    .style("top", (d3.event.pageY - 20) + "px");
+                                //data for modal
+                                d3.select(this).attr("class", "info").datum(d).style("cursor", "pointer");
+                            })
+                            .on("mouseout", function (d) {
+                                // unhighlight color
+                                d3.select(this).style("fill", function () {
+                                    return d3.color('#F3B124');
+                                })
+                                // change size back to normal
+                                var w = +d3.select(this).attr("width");
+                                d3.select(this).attr("x", +d3.select(this).attr("x") + .5).attr("width", w - 1);
+                                var h = +d3.select(this).attr("height");
+                                d3.select(this).attr("y", +d3.select(this).attr("y") + .5).attr("height", h - 1);
+                                // tooltip
+                                tooltip.transition()
+                                    .duration(100)
+                                    .style("opacity", 0);
+                                d3.select(this).attr("class", function () { return isActive(d) ? "is-active" : "is-inactive" });
+                            });
+                    })
+            });
+        }
+
+        // open modal dialogue on click
+        $('#myModal').on('show.bs.modal', function (d) {
+            var d = d3.select(".info").data().pop();
+            let modalTitle = d3.selectAll("h4.modal-title");
+            // modalTitle.text("test");
+            let modalBody = d3.selectAll(".modal-body");
+            modalBody.html("&ldquo;" + d.value.cleaned_hm + "&rdquo;");
+            let modalFooter = d3.selectAll(".modal-footer");
+            //tags
+            let tagGender = d3.selectAll(".demographic-tag.gender")
+            if (d.value.gender == 'f') {
+                tagGender.html('Female')
+            }
+            else if (d.value.gender == 'm') {
+                tagGender.html('Male')
+            }
+            else {
+                tagGender.html('?')
+            }
+            let tagMarital = d3.selectAll(".demographic-tag.marital")
+            tagMarital.html(d.value.marital.charAt(0).toUpperCase() + d.value.marital.slice(1))
+            let tagParenthood = d3.selectAll(".demographic-tag.parenthood")
+            if (d.value.parenthood == 'y') {
+                tagParenthood.html('Parent')
+            }
+            else if (d.value.parenthood == 'n') {
+                tagParenthood.html('Not Parent')
+            }
+            else {
+                tagParenthood.html('?')
+            }
+            let tagAge = d3.selectAll(".demographic-tag.age")
+            tagAge.html('Age ' + d.value.age.slice(0, -2))
+            let tagCountry = d3.selectAll(".demographic-tag.country")
+            tagCountry.html(d.value.country)
+            // modalFooter.html("Gender: " + d.value.gender + " | Marital: " + d.value.marital + " | Parenthood: " + d.value.parenthood + " | Country: " + d.value.country);
+        })
+
+        function updateFilter() {
+            d3.selectAll("rect").attr("class", function (d) {
+                return isActive(d) ? "is-active" : "is-inactive"
+            });
+        }
+
+        function isActive(d) {
+            let filterFemaleIsChecked = $('input[type="checkbox"][id="customRadioFemale"]').prop("checked") == true;
+            let filterMaleIsChecked = $('input[type="checkbox"][id="customRadioMale"]').prop("checked") == true;
+            if (d.value.gender == "f" && !filterFemaleIsChecked) {
+                return false;
+            }
+            else if (d.value.gender == "m" && !filterMaleIsChecked) {
+                return false;
+            }
+
+            let filterSingleIsChecked = $('input[type="checkbox"][id="customRadioSingle"]').prop("checked") == true;
+            let filterMarriedIsChecked = $('input[type="checkbox"][id="customRadioMarried"]').prop("checked") == true;
+            let filterDivorcedIsChecked = $('input[type="checkbox"][id="customRadioDivorced"]').prop("checked") == true;
+            let filterSeparatedIsChecked = $('input[type="checkbox"][id="customRadioSeparated"]').prop("checked") == true;
+            let filterWidowedIsChecked = $('input[type="checkbox"][id="customRadioWidowed"]').prop("checked") == true;
+            if (d.value.marital == "single" && !filterSingleIsChecked) {
+                return false;
+            }
+            else if (d.value.marital == "married" && !filterMarriedIsChecked) {
+                return false;
+            }
+            else if (d.value.marital == "divorced" && !filterDivorcedIsChecked) {
+                return false;
+            }
+            else if (d.value.marital == "separated" && !filterSeparatedIsChecked) {
+                return false;
+            }
+            else if (d.value.marital == "widowed" && !filterWidowedIsChecked) {
+                return false;
+            }
+
+            let filterParentIsChecked = $('input[type="checkbox"][id="customRadioParent"]').prop("checked") == true;
+            let filterNotParentIsChecked = $('input[type="checkbox"][id="customRadioNotParent"]').prop("checked") == true;
+            if (d.value.parenthood == "y" && !filterParentIsChecked) {
+                return false;
+            }
+            else if (d.value.parenthood == "n" && !filterNotParentIsChecked) {
+                return false;
+            }
+
+            return true;
+        }
+        // Initialize plot with category = affection
+        update("affection");
+
+    </script>
+
+</body>
+
+</html>
