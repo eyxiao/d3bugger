@@ -84,7 +84,7 @@
                 .enter().append("circle")
                 .attr("r", 3.5)
                 .attr("cx", function (d) { return x(d.date); })
-                .attr("cy", function (d) { return y(d.close); });
+                .attr("cy", function (d) { return y(d.close); })
 
             // Add the X Axis
             svg.append("g")

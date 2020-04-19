@@ -15,7 +15,7 @@
 
 
     <link rel="stylesheet" href="debugger.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
 
 </head>
 
@@ -24,16 +24,18 @@
     <div id="console">
         <div class="container">
             <div class="row">
-                <div class="col-sm">
+                <div class="col-sm-4">
                     <h5>Data Bound to this Element</h5>
                     <p>Displayed as <b>key:</b> value</p>
                     <div id="console-bound-data"></div>
                 </div>
-                <div class="col-sm">
-                    <h5>Element Attributes</h5>
+                <div class="col-sm-3">
+                    <h5>HTML Breakdown</h5>
+                    <div id="console-html-breakdown"></div>
                 </div>
-                <div class="col-sm">
+                <div class="col-sm-5">
                     <h5>Ancestry</h5>
+                    <div id="console-ancestry"></div>
                 </div>
             </div>
         </div>
@@ -47,10 +49,14 @@
     <script>
 
         function selectCircles() {
+            $("circle").bind("click", function () { updateConsole($(this)) });
 
-            $("circle").bind("click", function () { getBoundData($(this)) });
+            function updateConsole(selection) {
+                getBoundData(selection);
+                getHTMLAttributes(selection);
+                getAncestry(selection);
+            }
 
-            // console.log(d3.selectAll("circle"));
             function getBoundData(selection) {
                 d3.select(selection[0]).attr("class", function (d) {
                     $("#console-bound-data").html(""); //first clear out existing contents
@@ -58,11 +64,55 @@
                         let keyText = "<b>" + key + "</b>"
                         let valueText = d[key]
                         let fullEntry = "<p>" + keyText + ": " + valueText + "</p>";
-                        console.log(fullEntry)
+                        // console.log(fullEntry)
                         $("#console-bound-data").append(fullEntry);
                     })
-                    return "um";
+                    return;
                 });
+            }
+
+            function getHTMLAttributes(selection) {
+                // console.dir(selection)
+                // console.log(selection)
+                $("#console-html-breakdown").html(""); //first clear out existing contents
+                // tag
+                let tagEntry = "<p><b>tag: </b>" + selection[0].tagName + "</p>";
+                $("#console-html-breakdown").append(tagEntry);
+
+                //attributes
+                $(selection[0].attributes).each(function () {
+                    let fullEntry = "<p><b>" + this.nodeName + "</b> = " + this.nodeValue + "</p>";
+
+                    $("#console-html-breakdown").append(fullEntry);
+                });
+            }
+
+            function getAncestry(selection) {
+                $("#console-ancestry").html("") //clear
+
+                let ancestry = selection.parents().toArray().reverse(); //parents
+                ancestry.push(selection[0])
+
+                ancestry.forEach((ancestor, i) => {
+                    let parentHTMLCode = generateHTMLCode(ancestor)
+                    $("#console-ancestry").append("<p id=" + "\"parent" + i + "\"></p>");
+                    let indentation = "".repeat(i * 4);
+                    console.log(" ")
+                    $("#parent" + i).text(indentation + parentHTMLCode).css("margin-left", i + "rem");
+
+                })
+            }
+
+            function generateHTMLCode(selection) {
+                // console.log(selection.tagName)
+                var code = "<" + selection.tagName.toLowerCase() + " ";
+                $(selection.attributes).each(function () {
+                    code += this.nodeName + "=\"" + this.nodeValue + "\" ";
+                });
+                code = code.slice(0, -1);
+                code += "></" + selection.tagName.toLowerCase() + ">";
+                // console.log(code)
+                return code;
             }
 
         }

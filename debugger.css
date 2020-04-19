@@ -18,10 +18,20 @@
     height: 25vh;
     background-color: #ddd;
     text-align: left;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto Mono', sans-serif;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.75);
+    overflow: auto;
+ 
 }
 
 #console .container {
     padding: 1rem;
 }
+
+#console .col-sm {
+    
+}
+
+#console p {
+    margin-bottom: .05rem;
+    }
