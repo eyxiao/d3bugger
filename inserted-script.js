@@ -5,16 +5,45 @@
 // inserted();
 
 
-function selectCircles() {
-	console.log("working")
+function hoverSelection() {
+	// INJECT CSS
+	/* create the link element */
+	var linkElement = document.createElement('link');
+	/* add attributes */
+	linkElement.setAttribute('rel', 'stylesheet');
+	linkElement.setAttribute('href', 'inserted-styles.css');
+	/* attach to the document head */
+	document.getElementsByTagName('head')[0].appendChild(linkElement);
 
-	$("circle").bind("click", function () { updateConsole($(this)) });
+	// $("circle").bind("click", function () { updateConsole($(this)) });
+	// $("path").bind("click", function () { updateConsole($(this)) });
+
+	$("circle").hover(function () { updateConsole($(this)) }, function () { updateConsoleOut($(this)) });
+	$("path").hover(function () { updateConsole($(this)) }, function () { updateConsoleOut($(this)) });
+
+
 
 
 	function updateConsole(selection) {
+		//highlight selection
+		selection.addClass("hovered-svg");
+
 		// getBoundData(selection);
-		getHTMLAttributes(selection);
-		getAncestry(selection);
+		var tagJSON = getHTMLTag(selection);
+		var attributesJSON = getHTMLAttributes(selection);
+		var ancestryJSON = getAncestry(selection);
+
+
+		chrome.extension.sendMessage({
+			tag: JSON.stringify(tagJSON),
+			attributes: JSON.stringify(attributesJSON),
+			ancestry: JSON.stringify(ancestryJSON)
+		});
+
+	}
+
+	function updateConsoleOut(selection) {
+		selection.removeClass("hovered-svg");
 	}
 
 	// function getBoundData(selection) {
@@ -33,6 +62,12 @@ function selectCircles() {
 	// 	});
 	// }
 
+	function getHTMLTag(selection) {
+		var tagJSON = {};
+		tagJSON["tag"] = selection[0].tagName
+		return tagJSON
+	}
+
 	function getHTMLAttributes(selection) {
 		// console.dir(selection)
 		// console.log(selection)
@@ -42,6 +77,7 @@ function selectCircles() {
 		$("#console-html-breakdown").append(tagEntry);
 
 		var attributesJSON = {};
+
 		// var name = $(this).attr("name");
 		$.each(selection[0].attributes, function (i, attr) {
 			if (attr.specified) {
@@ -49,12 +85,9 @@ function selectCircles() {
 			}
 		});
 
-		console.log(JSON.stringify(attributesJSON));
-
-
-		chrome.extension.sendMessage({ attributes: JSON.stringify(attributesJSON) });
-
-		console.log(JSON.parse(JSON.stringify(attributesJSON)));
+		return attributesJSON;
+		// console.log(JSON.stringify(attributesJSON));
+		// console.log(JSON.parse(JSON.stringify(attributesJSON)));
 
 		// let attributes = JSON.parse(JSON.stringify(selection[0].attributes));
 		// console.log(attributes)
@@ -75,13 +108,18 @@ function selectCircles() {
 		let ancestry = selection.parents().toArray().reverse(); //parents
 		ancestry.push(selection[0])
 
+		let ancestryJSON = {} // maps indices to string of HTML per ancestor
+
 		ancestry.forEach((ancestor, i) => {
 			let parentHTMLCode = generateHTMLCode(ancestor)
 			$("#console-ancestry").append("<p id=" + "\"parent" + i + "\"></p>");
-			let indentation = "".repeat(i * 4);
-			$("#parent" + i).text(indentation + parentHTMLCode).css("margin-left", i + "rem");
+			$("#parent" + i).text(parentHTMLCode).css("margin-left", i + "rem");
+			ancestryJSON[i] = parentHTMLCode;
 
 		})
+
+		return ancestryJSON;
+
 	}
 
 	function generateHTMLCode(selection) {
@@ -98,4 +136,4 @@ function selectCircles() {
 
 }
 
-selectCircles();
+hoverSelection();

@@ -2,18 +2,31 @@
 <html>
 
 <head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	 crossorigin="anonymous">
 	<link rel="stylesheet" href="panel.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
-	<button id="executescript">Execute script in inspected page</button>
-	<button id="insertscript">Insert script into inspected page</button>
-	<button id="insertmessagebutton">Insert button to send a message from page to devtools</button>
+	<div id="panel-controls" class="panel">
+		<button id="insertscript" class="btn btn-dark">Activate Hover Inspector</button>
+	</div>
+
+	<div id="panel-html-breakdown" class="panel info-panel">
+		<h5>HTML Breakdown</h5>
+		<div id="display-tag">tag goes here</div>
+		<div id="display-attributes">attributes go here</div>
+	</div>
+
+	<div id="panel-ancestry" class="panel info-panel">
+		<h5>Ancestry</h5>
+		<div id="display-ancestry">ancestry goes here</div>
+	</div>
+
 	<script src="messaging.js"></script>
 	<script src="panel.js"></script>
-	<div id="console">hi i'm a dummy console</div>
-	<h4>HTML Breakdown</h4>
-	<div id="display-attributes">attributes go here</div>
 </body>
 
 </html>
