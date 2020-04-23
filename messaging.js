@@ -16,10 +16,7 @@
 
     // Listen to messages from the background page
     port.onMessage.addListener(function (message) {
-        // document.getElementById('display-attributes').innerHTML = "";
-        // let div = document.createElement("div")
-        // div.innerHTML = message.attributeEntry;
-        // document.getElementById('display-attributes').append(div);
+
         if (message.hasOwnProperty("tag")) {
             updateTag(message.tag)
         };
@@ -30,19 +27,13 @@
             updateAncestry(message.ancestry)
         };
 
-
-
-        // let HTMLentry = message.attributeEntry;
-        // console.log(HTMLentry);
-        // $("#display-attributes").html(message.attributeEntry);
-        // port.postMessage(message);
     });
 
 }());
 
 function updateTag(messageTag) {
     let tag = JSON.parse(messageTag);
-    document.getElementById('display-tag').innerHTML = "<b>tag: </b>" + tag["tag"];
+    document.getElementById('display-tag').innerHTML = "<b>&lt;" + tag["tag"] + "&gt;</b>";
 
 }
 
