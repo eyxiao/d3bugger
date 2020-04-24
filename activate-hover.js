@@ -84,9 +84,13 @@ function hoverSelection() {
 		let attributesJSON = {};
 
 		$.each(selection[0].attributes, function (i, attr) {
-			if (attr.specified && attr.value != "d3-debugger-hovered-svg") {
-				attributesJSON[attr.name] = attr.value;
-				attributeNames.push(attr.name);
+			if (attr.specified) {
+				attrValueWithoutCustomClass = attr.value.replace("d3-debugger-hovered-svg", "");
+				if (attrValueWithoutCustomClass.length > 0) {
+					attributesJSON[attr.name] = attrValueWithoutCustomClass;
+					attributeNames.push(attr.name);
+				}
+
 			}
 		});
 
@@ -133,9 +137,9 @@ function hoverSelection() {
 		// console.log(selection.tagName)
 		var code = "<" + selection.tagName.toLowerCase() + " ";
 		$(selection.attributes).each(function () {
-			nodeValue = this.nodeValue.replace("d3-debugger-hovered-svg", "");
-			if (nodeValue.length > 0) {
-				code += this.nodeName + "=\"" + nodeValue + "\" ";
+			nodeValueWithoutCustomClass = this.nodeValue.replace("d3-debugger-hovered-svg", "");
+			if (nodeValueWithoutCustomClass.length > 0) {
+				code += this.nodeName + "=\"" + nodeValueWithoutCustomClass + "\" ";
 			}
 		});
 		code = code.slice(0, -1);
