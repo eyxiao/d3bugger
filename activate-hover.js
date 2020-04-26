@@ -3,9 +3,6 @@
 // 	console.log('External script attached');
 // }
 // inserted();
-var pathSeg = require('./pathSeg.js')
-var VisDeconstruct = require('d3-decon-lib').Deconstruct;
-var _ = require('underscore');
 
 
 function hoverSelection() {
@@ -25,31 +22,17 @@ function hoverSelection() {
 
 
 	// BIND HOVER FUNCTIONS
-	// let svgGraphicsElements = ["circle", "ellipse", "image", "line", "path", "polygon", "polyline", "rect", "text", "use"]
-	// svgGraphicsElements.forEach((element, i) => {
-	// 	$(element).hover(function () { updateConsole($(this)) }, function () { updateConsoleOut($(this)) });
-	// })
-	$("svg").hover(function (event) { console.log(event.target instanceof SVGElement); updateConsole($(this), event); }, function () { updateConsoleOut($(this)) });
+	let svgGraphicsElements = ["circle", "ellipse", "image", "line", "path", "polygon", "polyline", "rect", "text", "use"]
+	svgGraphicsElements.forEach((element, i) => {
+		$(element).hover(function () { updateConsole($(this)) }, function () { updateConsoleOut($(this)) });
+	})
 	// $("circle").hover(function () { updateConsole($(this)) }, function () { updateConsoleOut($(this)) });
 	// $("path").hover(function () { updateConsole($(this)) }, function () { updateConsoleOut($(this)) });
 
 
 
 
-	function updateConsole(selection, event) {
-		var contextElem = event.target;
-		if (contextElem.tagName !== "svg") {
-			contextElem = contextElem.ownerSVGElement;
-		}
-		// var svgChildren = $(svgNode).find('*');
-		// console.log(selection[0]);
-		// console.log(typeof selection[0]);
-		// console.log(jQuery.type(selection));
-		// console.log(jQuery.type(selection[0]));
-		// console.log(SVGElement[0] instanceof SVGElement);
-		var deconstructed = VisDeconstruct.deconstruct(contextElem);
-		console.log(deconstructed);
-
+	function updateConsole(selection) {
 		//highlight selection
 		selection.addClass("d3-debugger-hovered-svg");
 

@@ -11,7 +11,7 @@
 document.querySelector('#hover-inspector').addEventListener('click', function () {
     const hoverButton = document.querySelector(".btn.btn-secondary");
     if (!hoverButton.classList.contains("active")) {
-        sendObjectToInspectedPage({ action: "script", content: "bundle.js" });
+        sendObjectToInspectedPage({ action: "script", content: "activate-hover.js" });
         document.querySelector('#hover-inspector-label').innerHTML = "Deactivate Hover Inspector";
     }
     else {
