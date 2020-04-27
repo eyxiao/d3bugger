@@ -4,6 +4,10 @@
 // }
 // inserted();
 
+// var $ = require('jquery');
+
+var p = document.getElementsByTagName('circle');
+console.log(p[0].__data__); // yay this works now
 
 function hoverSelection() {
 	// INJECT CSS
@@ -17,17 +21,18 @@ function hoverSelection() {
 	document.getElementsByTagName('head')[0].appendChild(linkElement);
 
 
+	$("circle").hover(function (event) { console.log(event.target.__data__); updateConsole($(this), event); }, function () { updateConsoleOut($(this)) });
+
 	// $("circle").bind("click", function () { updateConsole($(this)) });
 	// $("path").bind("click", function () { updateConsole($(this)) });
 
 
 	// BIND HOVER FUNCTIONS
-	let svgGraphicsElements = ["circle", "ellipse", "image", "line", "path", "polygon", "polyline", "rect", "text", "use"]
-	svgGraphicsElements.forEach((element, i) => {
-		$(element).hover(function () { updateConsole($(this)) }, function () { updateConsoleOut($(this)) });
-	})
-	// $("circle").hover(function () { updateConsole($(this)) }, function () { updateConsoleOut($(this)) });
-	// $("path").hover(function () { updateConsole($(this)) }, function () { updateConsoleOut($(this)) });
+	// let svgGraphicsElements = ["circle", "ellipse", "image", "line", "path", "polygon", "polyline", "rect", "text", "use"]
+	// svgGraphicsElements.forEach((element, i) => {
+	// 	$(element).hover(function () { updateConsole($(this)) }, function () { updateConsoleOut($(this)) });
+	// })
+
 
 
 

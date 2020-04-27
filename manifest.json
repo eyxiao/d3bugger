@@ -8,6 +8,9 @@
             "matches": [
                 "<all_urls>"
             ],
+            "css": [
+                "inserted-styles.css"
+            ],
             "js": [
                 "jquery-3.5.0.min.js",
                 "d3.js",
@@ -25,5 +28,8 @@
         "http://*/*",
         "https://*/*"
     ],
-    "manifest_version": 2
+    "manifest_version": 2,
+    "web_accessible_resources": [
+        "activate-hover.js"
+    ]
 }

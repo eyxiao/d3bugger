@@ -8,6 +8,8 @@
 //     sendObjectToInspectedPage({ action: "code", content: "console.log('Inline script executed')" });
 // }, false);
 
+sendObjectToInspectedPage({ action: "script", content: "debug.js" });
+
 document.querySelector('#hover-inspector').addEventListener('click', function () {
     const hoverButton = document.querySelector(".btn.btn-secondary");
     if (!hoverButton.classList.contains("active")) {
