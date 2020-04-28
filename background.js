@@ -3,47 +3,60 @@
 // 
 // Can use:
 // chrome.tabs.*
-// chrome.extension.*
+// chrome.runtime.*
 
-chrome.extension.onConnect.addListener(function (port) {
 
+var connections = {};
+
+chrome.runtime.onConnect.addListener(function (port) {
     var extensionListener = function (message, sender, sendResponse) {
-
-        if (message.tabId && message.content) {
-
-            //Evaluate script in inspectedPage
-            if (message.action === 'code') {
-                chrome.tabs.executeScript(message.tabId, { code: message.content });
-
-                //Attach script to inspectedPage
-            } else if (message.action === 'script') {
-                chrome.tabs.executeScript(message.tabId, { file: message.content, allFrames: true });
-
-                //Pass message to inspectedPage
-            } else {
-                chrome.tabs.sendMessage(message.tabId, message, sendResponse);
-            }
-
-            // This accepts messages from the inspectedPage and 
-            // sends them to the panel
-        } else {
-            port.postMessage(message);
+        // The original connection event doesn't include the tab ID of the DevTools page, so we need to send it explicitly.
+        if (message.name == "init") {
+          connections[message.tabId] = port;
+          console.log("initiated port " + message.source + " " + message.tabId);
+          return;
         }
-        sendResponse(message);
+	// other message handling goes here
     }
 
-    // Listens to messages sent from the panel
-    chrome.extension.onMessage.addListener(extensionListener);
+    // Listen to messages sent from the DevTools page
+    port.onMessage.addListener(extensionListener);
 
-    port.onDisconnect.addListener(function (port) {
-        chrome.extension.onMessage.removeListener(extensionListener);
+    // Remove this end of port if other end disconnects
+    port.onDisconnect.addListener(function(port) {
+        console.log("port disconnected :(");
+
+        port.onMessage.removeListener(extensionListener);
+
+        var tabs = Object.keys(connections);
+        for (var i=0; i < tabs.length; i++) {
+            console.log(tabs[i]);
+            console.log(connections[tabs[i]]);
+            console.log(connections[tabs[i]].name);
+            if (connections[tabs[i]] == port) {
+                delete connections[tabs[i]]
+                break;
+            } else {
+                console.log("port not found");
+            }
+        }
     });
-
-    // port.onMessage.addListener(function (message) {
-    //     port.postMessage(message);
-    // });
-
 });
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+
+// Receive message from content script and relay to the devTools page for the current tab
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    console.log("received message in background.js");
+    // Messages from content scripts should have sender.tab set
+    if (sender.tab) {
+        var tabId = sender.tab.id;
+        if (tabId in connections) {
+            connections[tabId].postMessage(request);
+            console.log("sent message from background to devTools, port " + tabId);
+        } else {
+            console.log("Tab not found in connection list.");
+        }
+    } else {
+    console.log("sender.tab not defined.");
+    }
     return true;
 });

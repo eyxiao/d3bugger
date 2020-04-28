@@ -3,6 +3,12 @@
     "version": "0.1",
     "description": "A bare-bones example of communication between devtools and an inspected page",
     "devtools_page": "devtools.html",
+    "icons": { 
+        "16": "img/icon16.png",
+        "48": "img/icon48.png",
+        "128": "img/icon128.png"
+
+    },
     "content_scripts": [
         {
             "matches": [
@@ -12,16 +18,14 @@
                 "inserted-styles.css"
             ],
             "js": [
-                "jquery-3.5.0.min.js",
-                "d3.js",
+                "lib/jquery-3.5.0.min.js",
+                "lib/d3.js",
                 "content-script.js"
             ]
         }
     ],
     "background": {
-        "scripts": [
-            "background.js"
-        ]
+        "scripts": ["background.js"]
     },
     "permissions": [
         "tabs",
@@ -30,6 +34,8 @@
     ],
     "manifest_version": 2,
     "web_accessible_resources": [
-        "activate-hover.js"
+        "activate-hover.js",
+        "bundle.js",
+        "background.js"
     ]
 }

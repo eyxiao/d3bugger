@@ -2,32 +2,67 @@
 //
 // Can use
 // chrome.devtools.*
-// chrome.extension.*
+// chrome.runtime.*
 
-// document.querySelector('#executescript').addEventListener('click', function () {
-//     sendObjectToInspectedPage({ action: "code", content: "console.log('Inline script executed')" });
-// }, false);
 
-sendObjectToInspectedPage({ action: "script", content: "debug.js" });
+// Function called in devtools.js
+function updatePanel(msg) {
+    var message = msg.message;
+    console.log(":HELLO");
+    chrome.devtools.inspectedWindow.eval(`console.log(${message.tag});`);
 
-document.querySelector('#hover-inspector').addEventListener('click', function () {
-    const hoverButton = document.querySelector(".btn.btn-secondary");
-    if (!hoverButton.classList.contains("active")) {
-        sendObjectToInspectedPage({ action: "script", content: "activate-hover.js" });
-        document.querySelector('#hover-inspector-label').innerHTML = "Deactivate Hover Inspector";
+    if (message.hasOwnProperty("tag")) {
+        updateTag(message.tag);
+    };
+    if (message.hasOwnProperty("attributes")) {
+        updateAttributes(message.attributes);
+    };
+    if (message.hasOwnProperty("ancestry")) {
+        updateAncestry(message.ancestry);
+    };
+    if (message.hasOwnProperty("data")) {
+        updateData(message.data);
+    };
+}
+
+function updateTag(messageTag) {
+    let tag = JSON.parse(messageTag);
+    document.getElementById('display-tag').innerHTML = "<b>&lt;" + tag["tag"] + "&gt;</b>";
+}
+
+function updateAttributes(messageAttributes) {
+    let attributes = JSON.parse(messageAttributes);
+    document.getElementById('display-attributes').innerHTML = ""; //clear first
+
+    for (var key of Object.keys(attributes)) {
+        let newDiv = document.createElement("div");
+        let fullEntry = "<div class='entry'> <span class='attribute'>" + key + "</span> : " + attributes[key] + "</div>";
+        newDiv.innerHTML = fullEntry;
+        document.getElementById('display-attributes').appendChild(newDiv);
     }
-    else {
-        sendObjectToInspectedPage({ action: "script", content: "deactivate-hover.js" });
-        document.querySelector('#hover-inspector-label').innerHTML = "Activate Hover Inspector";
+}
+
+function updateAncestry(messageAncestry) {
+    let ancestry = JSON.parse(messageAncestry)
+    document.getElementById('display-ancestry').innerHTML = "";
+
+    for (var key of Object.keys(ancestry)) {
+        let newDiv = document.createElement("div");
+        newDiv.id = "ancestor-" + key;
+        newDiv.style.marginLeft = key + "rem";
+        newDiv.textContent = ancestry[key];
+        document.getElementById('display-ancestry').appendChild(newDiv);
     }
-    hoverButton.classList.toggle('active');
-}, false);
+}
 
-// document.querySelector('#insertmessagebutton').addEventListener('click', function () {
-//     sendObjectToInspectedPage({ action: "code", content: "document.body.innerHTML='<button>Send message to DevTools</button>'" });
-//     sendObjectToInspectedPage({ action: "script", content: "messageback-script.js" });
-// }, false);
+function updateData(messageData) {
+    let data = JSON.parse(messageData);
+    document.getElementById('display-data').innerHTML = "";
 
-
-chrome.devtools.inspectedWindow.eval("setSelectedElement('hi')",
-    { useContentScriptContext: true })
+    for (var key of Object.keys(data)) {
+        let newDiv = document.createElement("div");
+        let fullEntry = "<div class='entry'> <span class='attribute'>" + key + "</span> : " + JSON.stringify(data[key]) + "</div>";
+        newDiv.innerHTML = fullEntry;
+        document.getElementById('display-data').appendChild(newDiv);
+    }
+}

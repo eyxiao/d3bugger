@@ -1,15 +1,27 @@
 body {
     background-color: #fff;
-    font-size: .8rem;
-    font-family: 'Inconsolata', monospace;
+    font-size: .7rem;
+    font-family: 'Lucida Grande', sans-serif;
 }
 
 .panel {
     padding: 1rem;
-    border-bottom: 1px solid #999;
+    border-bottom: 1px solid lightgray;
 
 }
 
 .info-panel {
-    min-height: 25vh;
+    min-height: 10vh;
 }
+
+.entry {
+    border-top: 1px lightgray solid;
+    padding-bottom: .13rem;
+    padding-top: .13rem;
+    width: 100vw;
+}
+
+.attribute {
+    color: purple;
+}
+

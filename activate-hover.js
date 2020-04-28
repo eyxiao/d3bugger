@@ -4,10 +4,8 @@
 // }
 // inserted();
 
-// var $ = require('jquery');
+var $ = require('jquery');
 
-var p = document.getElementsByTagName('circle');
-console.log(p[0].__data__); // yay this works now
 
 function hoverSelection() {
 	// INJECT CSS
@@ -21,36 +19,38 @@ function hoverSelection() {
 	document.getElementsByTagName('head')[0].appendChild(linkElement);
 
 
-	$("circle").hover(function (event) { console.log(event.target.__data__); updateConsole($(this), event); }, function () { updateConsoleOut($(this)) });
-
-	// $("circle").bind("click", function () { updateConsole($(this)) });
-	// $("path").bind("click", function () { updateConsole($(this)) });
-
-
 	// BIND HOVER FUNCTIONS
-	// let svgGraphicsElements = ["circle", "ellipse", "image", "line", "path", "polygon", "polyline", "rect", "text", "use"]
-	// svgGraphicsElements.forEach((element, i) => {
-	// 	$(element).hover(function () { updateConsole($(this)) }, function () { updateConsoleOut($(this)) });
-	// })
-
-
-
+	let svgGraphicsElements = ["circle", "ellipse", "image", "line", "path", "polygon", "polyline", "rect", "text", "use"]
+	svgGraphicsElements.forEach((element, i) => {
+		$(element).hover(function (event) { updateConsole($(this), event); }, function () { updateConsoleOut($(this)) });
+	})
 
 
 	function updateConsole(selection) {
 		//highlight selection
 		selection.addClass("d3-debugger-hovered-svg");
 
-		// getBoundData(selection);
 		var tagJSON = getHTMLTag(selection);
 		var attributesJSON = getHTMLAttributes(selection);
 		var ancestryJSON = getAncestry(selection);
+		var dataJSON = getData(selection);
 
-		chrome.extension.sendMessage({
+		var deconData = {
 			tag: JSON.stringify(tagJSON),
 			attributes: JSON.stringify(attributesJSON),
-			ancestry: JSON.stringify(ancestryJSON)
-		});
+			ancestry: JSON.stringify(ancestryJSON),
+			data: JSON.stringify(dataJSON)
+		};
+
+		console.log(deconData);
+
+
+		window.postMessage({
+			type: "FROM_PAGE_TO_CONTENT_SCRIPT",
+			message: deconData,
+		}, "*");
+		
+		console.log("sent message");
 
 	}
 
@@ -58,21 +58,11 @@ function hoverSelection() {
 		selection.removeClass("d3-debugger-hovered-svg");
 	}
 
-	// function getBoundData(selection) {
-	// 	d3.select(selection[0]).attr("class", "huh")
-	// 	d3.select(selection[0]).attr("class", function (d) {
-	// 		$("#console-bound-data").html(""); //first clear out existing contents
-	// 		console.log(d)
-	// 		Object.keys(d).forEach((key) => {
-	// 			let keyText = "<b>" + key + "</b>"
-	// 			let valueText = d[key]
-	// 			let fullEntry = "<p>" + keyText + ": " + valueText + "</p>";
-	// 			// console.log(fullEntry)
-	// 			$("#console-bound-data").append(fullEntry);
-	// 		})
-	// 		return;
-	// 	});
-	// }
+	////////////////// get panel properties /////////////////
+
+	function getData(selection) {
+		return selection[0].__data__;
+	}
 
 	function getHTMLTag(selection) {
 		var tagJSON = {};
@@ -81,10 +71,6 @@ function hoverSelection() {
 	}
 
 	function getHTMLAttributes(selection) {
-		// $("#console-html-breakdown").html(""); //first clear out existing contents
-		// // tag
-		// let tagEntry = "<p><b>tag: </b>" + selection[0].tagName + "</p>";
-		// $("#console-html-breakdown").append(tagEntry);
 		attributeNames = [];
 		let attributesJSON = {};
 
@@ -107,15 +93,6 @@ function hoverSelection() {
 		})
 
 		return sortedAttributesJSON;
-		//attributes
-		// $(selection[0].attributes).each(function () {
-		// 	let fullEntry = "<p><b>" + this.nodeName + "</b> = " + this.nodeValue + "</p>";
-		// 	// let frag = document.createRange().createContextualFragment(fullEntry);
-		// 	chrome.extension.sendMessage({ attributeEntry: fullEntry });
-		// 	// console.log(frag);
-
-		// 	// $("#console-html-breakdown").append(fullEntry);
-		// });
 	}
 
 	function getAncestry(selection) {
@@ -128,8 +105,6 @@ function hoverSelection() {
 
 		ancestry.forEach((ancestor, i) => {
 			let parentHTMLCode = generateHTMLCode(ancestor)
-			// $("#console-ancestry").append("<p id=" + "\"parent" + i + "\"></p>");
-			// $("#parent" + i).text(parentHTMLCode).css("margin-left", i + "rem");
 			ancestryJSON[i] = parentHTMLCode;
 
 		})
@@ -139,7 +114,6 @@ function hoverSelection() {
 	}
 
 	function generateHTMLCode(selection) {
-		// console.log(selection.tagName)
 		var code = "<" + selection.tagName.toLowerCase() + " ";
 		$(selection.attributes).each(function () {
 			nodeValueWithoutCustomClass = this.nodeValue.replace("d3-debugger-hovered-svg", "");
@@ -149,7 +123,6 @@ function hoverSelection() {
 		});
 		code = code.slice(0, -1);
 		code += "></" + selection.tagName.toLowerCase() + ">";
-		// console.log(code)
 		return code;
 	}
 

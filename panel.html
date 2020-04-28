@@ -6,18 +6,18 @@
 	 crossorigin="anonymous">
 	<link rel="stylesheet" href="panel.css">
 	<link href="https://fonts.googleapis.com/css?family=Inconsolata&display=swap" rel="stylesheet">
-
+	<script src="bundle.js"></script> <!-- for browserify -->
 </head>
 
 <body>
-	<div id="panel-controls" class="panel">
+	<!-- <div id="panel-controls" class="panel">
 		<div class="btn-group-toggle" data-toggle="buttons">
 			<label class="btn btn-secondary">
 				<input id="hover-inspector" type="checkbox" autocomplete="off"> <span id="hover-inspector-label">Activate Hover
 					Inspector</span>
 			</label>
 		</div>
-	</div>
+	</div> -->
 
 	<div id="panel-html-breakdown" class="panel info-panel">
 		<h5>HTML Breakdown</h5>
@@ -25,10 +25,16 @@
 		<div id="display-attributes">attributes go here</div>
 	</div>
 
+	<div id="panel-data" class="panel info-panel">
+		<h5>Data</h5>
+		<div id="display-data">data goes here</div>
+	</div>
+
 	<div id="panel-ancestry" class="panel info-panel">
 		<h5>Ancestry</h5>
 		<div id="display-ancestry">ancestry goes here</div>
 	</div>
+
 
 	<script src="messaging.js"></script>
 	<script src="panel.js"></script>
