@@ -4,11 +4,9 @@
 // chrome.devtools.*
 // chrome.runtime.*
 
-
 // Function called in devtools.js
 function updatePanel(msg) {
     var message = msg.message;
-    console.log(":HELLO");
     chrome.devtools.inspectedWindow.eval(`console.log(${message.tag});`);
 
     if (message.hasOwnProperty("tag")) {

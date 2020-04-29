@@ -14,7 +14,7 @@ function hoverSelection() {
 	var linkElement = document.createElement('link');
 	/* add attributes */
 	linkElement.setAttribute('rel', 'stylesheet');
-	linkElement.setAttribute('href', '../inserted-styles.css'); //TODO: fix this file path???
+	// linkElement.setAttribute('href', 'inserted-styles.css'); //TODO: fix this file path???
 	linkElement.setAttribute('type', 'text/css');
 	/* attach to the document head */
 	document.getElementsByTagName('head')[0].appendChild(linkElement);
@@ -25,7 +25,6 @@ function hoverSelection() {
 	svgGraphicsElements.forEach((element, i) => {
 		$(element).hover(function (event) { updateConsole($(this), event); }, function () { updateConsoleOut($(this)) });
 	})
-
 
 	function updateConsole(selection) {
 		//highlight selection
@@ -44,7 +43,6 @@ function hoverSelection() {
 		};
 
 		console.log(deconData);
-
 
 		window.postMessage({
 			type: "FROM_PAGE_TO_CONTENT_SCRIPT",
