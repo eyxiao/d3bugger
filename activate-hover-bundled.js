@@ -42,14 +42,14 @@ function hoverSelection() {
 			data: JSON.stringify(dataJSON)
 		};
 
-		console.log(deconData);
+		// console.log(deconData);
 
 		window.postMessage({
 			type: "FROM_PAGE_TO_CONTENT_SCRIPT",
 			message: deconData,
 		}, "*");
 		
-		console.log("sent message");
+		// console.log("sent message");
 
 	}
 

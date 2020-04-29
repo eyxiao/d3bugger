@@ -7,7 +7,6 @@
 // Function called in devtools.js
 function updatePanel(msg) {
     var message = msg.message;
-    chrome.devtools.inspectedWindow.eval(`console.log(${message.tag});`);
 
     if (message.hasOwnProperty("tag")) {
         updateTag(message.tag);
