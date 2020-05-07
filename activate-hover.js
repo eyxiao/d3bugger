@@ -5,7 +5,7 @@
 // inserted();
 
 var $ = require('jquery');
-
+console.log("activate-hover.js has been injected")
 
 function hoverSelection() {
 	// INJECT CSS
@@ -49,7 +49,7 @@ function hoverSelection() {
 			type: "FROM_PAGE_TO_CONTENT_SCRIPT",
 			message: deconData,
 		}, "*");
-		
+
 		console.log("sent message");
 
 	}
