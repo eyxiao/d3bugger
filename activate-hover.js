@@ -42,7 +42,7 @@ function hoverSelection() {
 			data: JSON.stringify(dataJSON)
 		};
 
-		console.log(deconData);
+		// console.log(deconData);
 
 
 		window.postMessage({
@@ -50,7 +50,7 @@ function hoverSelection() {
 			message: deconData,
 		}, "*");
 
-		console.log("sent message");
+		// console.log("sent message");
 
 	}
 
