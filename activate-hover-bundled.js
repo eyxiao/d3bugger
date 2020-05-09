@@ -6,7 +6,7 @@
 // inserted();
 
 var $ = require('jquery');
-
+console.log("activate-hover.js has been injected")
 
 function hoverSelection() {
 	// INJECT CSS
@@ -26,6 +26,7 @@ function hoverSelection() {
 		$(element).hover(function (event) { updateConsole($(this), event); }, function () { updateConsoleOut($(this)) });
 	})
 
+
 	function updateConsole(selection) {
 		//highlight selection
 		selection.addClass("d3-debugger-hovered-svg");
@@ -43,6 +44,7 @@ function hoverSelection() {
 		};
 
 		// console.log(deconData);
+
 
 		window.postMessage({
 			type: "FROM_PAGE_TO_CONTENT_SCRIPT",
