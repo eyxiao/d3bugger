@@ -24,8 +24,8 @@ chrome.devtools.panels.create("D3 Debugger", "img/icon48.png", "panel.html", fun
 
     // Listen for messages from background, and update panel's info with message received
     port.onMessage.addListener(function (message) {
-        // chrome.devtools.inspectedWindow.eval('console.log("received message from background in devtools");');
-        // chrome.devtools.inspectedWindow.eval(`console.log(${JSON.stringify(message)});`);
+        chrome.devtools.inspectedWindow.eval('console.log("received message from background in devtools");');
+        chrome.devtools.inspectedWindow.eval(`console.log(${JSON.stringify(message)});`);
 
         if (_window) {
             _window.updatePanel(message);

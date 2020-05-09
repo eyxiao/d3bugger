@@ -24,7 +24,7 @@ function updatePanel(msg) {
 
 function updateTag(messageTag) {
     let tag = JSON.parse(messageTag);
-    document.getElementById('display-tag').innerHTML = "<b>&lt;" + tag["tag"] + "&gt;</b>";
+    document.getElementById('display-tag').innerHTML = "<b> <div class='entry'> &lt;" + tag["tag"] + "&gt;</b>";
 }
 
 function updateAttributes(messageAttributes) {
@@ -46,6 +46,7 @@ function updateAncestry(messageAncestry) {
     for (var key of Object.keys(ancestry)) {
         let newDiv = document.createElement("div");
         newDiv.id = "ancestor-" + key;
+        newDiv.class = "entry";
         newDiv.style.marginLeft = key + "rem";
         newDiv.textContent = ancestry[key];
         document.getElementById('display-ancestry').appendChild(newDiv);
@@ -58,8 +59,22 @@ function updateData(messageData) {
 
     for (var key of Object.keys(data)) {
         let newDiv = document.createElement("div");
-        let fullEntry = "<div class='entry'> <span class='attribute'>" + key + "</span> : " + JSON.stringify(data[key]) + "</div>";
+        let fullEntry = "<div class='entry'> <span class='attribute'>" + key + "</span> : <pre id='JSON'>" + JSON.stringify(data[key], undefined, 4) + "</pre> </div>";
         newDiv.innerHTML = fullEntry;
         document.getElementById('display-data').appendChild(newDiv);
     }
+}
+
+
+// Send message to update selection type
+function updateSelectionType(selectionType) {
+    console.log("got button click...");
+    var message = {
+        name: "updateSelectionType",
+        message: selectionType,
+        tabId: chrome.devtools.inspectedWindow.tabId,
+        source: "panel.js"
+    }
+    chrome.runtime.sendMessage(message);
+    console.log("sent message from panel");
 }

@@ -1,27 +1,50 @@
 body {
     background-color: #fff;
     font-size: .7rem;
-    font-family: 'Lucida Grande', sans-serif;
+    font-family: 'Menlo', monospace;
+    color: rgb(90, 90, 90);
 }
 
 .panel {
-    padding: 1rem;
-    border-bottom: 1px solid lightgray;
+    /* border-bottom: 1px solid #ccc; */
 
 }
 
-.info-panel {
+/* .info-panel {
     min-height: 10vh;
+} */
+
+.title {
+    padding-left: .7rem;
+    padding-top: .22rem;
+    padding-bottom: .22rem;
+    background-color: #f3f3f3;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 12px;
+    border-top: .05px rgb(225, 225, 225) solid;
+    border-bottom: .05px solid rgb(225, 225, 225);
+}
+
+.container {
+    /* padding-top: .4rem; */
+    /* padding-bottom: .4rem; */
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .entry {
-    border-top: 1px lightgray solid;
-    padding-bottom: .13rem;
-    padding-top: .13rem;
-    width: 100vw;
+    border-top: .3px rgb(242, 242, 242) solid;
+    padding-bottom: .1rem;
+    padding-top: .3rem;
+    padding-left: 1rem;
+    padding-right: 0.8rem;
+}
+
+.entry:hover {
+    background-color: #ebf1fc;
 }
 
 .attribute {
-    color: purple;
+    color: rgb(136, 18, 128);
 }
 
