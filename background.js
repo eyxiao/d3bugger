@@ -13,19 +13,19 @@ chrome.runtime.onConnect.addListener(function (port) {
         // The original connection event doesn't include the tab ID of the DevTools page, so we need to send it explicitly.
         if (message.name == "init") {
           connections[message.tabId] = port;
-          console.log("initiated port " + message.source + " " + message.tabId);
+        //   console.log("initiated port " + message.source + " " + message.tabId);
           return;
         } else if (message.source === "panel.js") { 
-            // Received message from panel to update selection type
-            // Send message to content script to inject new script/update selection type
-            console.log("received message from panel.js");
-            console.log(message);
+            // Received message from panel to update selection type or highlight
+            // Send message to content script to inject new script/update selection type or update highlight
+            // console.log("received message from panel.js");
+            // console.log(message);
             chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
                 chrome.tabs.sendMessage(tabs[0].id, message);  
             });
         } else {
-            console.log(message);
-            console.log("received message" + message.name + "from " + message.source);
+            // console.log(message);
+            // console.log("received message" + message.name + "from " + message.source);
         }
     }
 
@@ -68,7 +68,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             // console.log("Tab not found in connection list.");
         }
     } else {
-        console.log("sender.tab not defined.");
+        // console.log("sender.tab not defined.");
     }
     return true;
 });

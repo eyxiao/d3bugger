@@ -15,10 +15,10 @@ window.addEventListener("message", function (event) {
 
 // Listen for messages from background.js
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.name === "updateSelectionType") {
-        console.log("received message in content-script to update selection type to " + message.message);
+    if (message.name === "updateSelectionType" || message.name === "updateHighlight") {
+        // console.log("received message in content-script to update selection type to " + message.message);
         window.postMessage(message);
-        console.log("sent message to activate-hover injected");
+        // console.log("sent message to activate-hover injected");
     }
 });
 
@@ -26,10 +26,10 @@ function doInject() {
     var jsInitChecktimer = setInterval(checkForSVG, 111);
 
     function checkForSVG() {
-        console.log("waiting for SVG Graphic Element to load...")
+        // console.log("waiting for SVG Graphic Element to load...")
         var svgLoaded = checkForSVGGraphicElement();
         if (svgLoaded) {
-            console.log("SVG Graphic Element found!")
+            // console.log("SVG Graphic Element found!")
             clearInterval(jsInitChecktimer);
             var scriptElement;
             scriptElement = document.createElement('script');
@@ -45,7 +45,7 @@ function checkForSVGGraphicElement() {
     let svgGraphicsElements = ["circle", "ellipse", "image", "line", "path", "polygon", "polyline", "rect", "text", "use"]
     svgGraphicsElements.forEach((element, i) => {
         if (document.querySelector(element)) {
-            console.log("found " + element);
+            // console.log("found " + element);
             foundElement = true;
         }
     })

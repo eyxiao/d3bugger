@@ -2,16 +2,14 @@
 <html>
 
 <head>
-	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
 	<link rel="stylesheet" href="panel.css">
 	<script src="lib/jquery-3.5.0.min.js"></script>
-	<!-- <script src="lib/bootstrap.min.js"></script> -->
-	<link href="https://fonts.googleapis.com/css?family=Inconsolata&display=swap" rel="stylesheet">
-	<!-- <script src="activate-hover-bundle.js"></script> for browserify -->
+	<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@900&display=swap" rel="stylesheet">
 </head>
 
 <body>
 	<div class="btn-panel">
+		<div class="extension-title">d3<span class="extension-title-lighter">bugger</span></div>
 		<div class="btn-group">
 			<input type="radio" name="options" id="button-hover" autocomplete="off" checked>
 			<label for="button-hover">Hover</label>
@@ -22,6 +20,11 @@
 			<input type="radio" name="options" id="button-off" autocomplete="off">
 			<label for="button-off">Off</label>
 		</div>
+		<div id="highlight-label">Highlight</div>
+		<label class="switch">
+			<input type="checkbox" name="highlight" id="button-highlight" checked>
+			<span class="slider"></span>
+		</label>
 	</div>
 
 	<div id="panel-html-breakdown" class="panel info-panel">
