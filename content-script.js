@@ -13,6 +13,15 @@ window.addEventListener("message", function (event) {
     }
 })
 
+// Listen for messages from background.js
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.name === "updateSelectionType") {
+        console.log("received message in content-script to update selection type to " + message.message);
+        window.postMessage(message);
+        console.log("sent message to activate-hover injected");
+    }
+});
+
 function doInject() {
     var jsInitChecktimer = setInterval(checkForSVG, 111);
 
@@ -29,7 +38,6 @@ function doInject() {
             return document.body.appendChild(scriptElement);
         }
     }
-
 }
 
 function checkForSVGGraphicElement() {

@@ -13,10 +13,20 @@ chrome.runtime.onConnect.addListener(function (port) {
         // The original connection event doesn't include the tab ID of the DevTools page, so we need to send it explicitly.
         if (message.name == "init") {
           connections[message.tabId] = port;
-        //   console.log("initiated port " + message.source + " " + message.tabId);
+          console.log("initiated port " + message.source + " " + message.tabId);
           return;
+        } else if (message.source === "panel.js") { 
+            // Received message from panel to update selection type
+            // Send message to content script to inject new script/update selection type
+            console.log("received message from panel.js");
+            console.log(message);
+            chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+                chrome.tabs.sendMessage(tabs[0].id, message);  
+            });
+        } else {
+            console.log(message);
+            console.log("received message" + message.name + "from " + message.source);
         }
-	// other message handling goes here
     }
 
     // Listen to messages sent from the DevTools page
@@ -43,6 +53,7 @@ chrome.runtime.onConnect.addListener(function (port) {
     });
 });
 
+
 // Receive message from content script and relay to the devTools page for the current tab
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     // console.log("received message in background.js");
@@ -50,6 +61,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (sender.tab) {
         var tabId = sender.tab.id;
         if (tabId in connections) {
+            request.source = "background.js";
             connections[tabId].postMessage(request);
             // console.log("sent message from background to devTools, port " + tabId);
         } else {

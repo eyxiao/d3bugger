@@ -3,21 +3,68 @@ body {
     font-size: .7rem;
     font-family: 'Menlo', monospace;
     color: rgb(90, 90, 90);
+    margin: 0;
 }
 
 .panel {
     /* border-bottom: 1px solid #ccc; */
+}
 
+/* For data formatting */
+pre {
+    font-family: 'Menlo', monospace;;
+    color: rgb(90, 90, 90);
+    margin: 0;
+    font-size: .7rem;
 }
 
 /* .info-panel {
     min-height: 10vh;
 } */
 
+/* For the buttons */
+.btn-panel {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 12px;
+    padding: .3rem;
+    background-color: lightgray;
+    display: flex;
+    justify-content: center;
+}
+.btn-group {
+    display: flex;
+    margin: 0 auto;
+}
+.btn-group input[type="radio"] {
+    opacity: 0;
+    position: fixed;
+    width: 0;
+}
+
+.btn-group label {
+    display: inline-block;
+    background-color: white;
+    padding: .2rem;
+    padding-top: .25rem;
+    border: .01rem rgb(228, 228, 228) solid;
+    width: 3rem;
+    text-align: center;
+}
+
+.btn-group input[type="radio"]:checked + label {
+    background-color: rgb(181, 181, 181);
+    border: .02rem rgb(181, 181, 181) solid;
+}
+
+.btn-group label:hover {
+    background-color: rgb(235, 235, 235);
+    cursor: pointer;
+  }
+
 .title {
     padding-left: .7rem;
-    padding-top: .22rem;
-    padding-bottom: .22rem;
+    padding-top: .27rem;
+    padding-bottom: .25rem;
     background-color: #f3f3f3;
     font-family: 'Helvetica Neue', sans-serif;
     font-size: 12px;
@@ -27,7 +74,7 @@ body {
 
 .container {
     /* padding-top: .4rem; */
-    /* padding-bottom: .4rem; */
+    padding-bottom: .1rem;
     padding-left: 0;
     padding-right: 0;
 }
@@ -37,6 +84,14 @@ body {
     padding-bottom: .1rem;
     padding-top: .3rem;
     padding-left: 1rem;
+    padding-right: 0.8rem;
+    overflow: auto; 
+}
+
+.ancestor-entry {
+    padding-bottom: .1rem;
+    padding-top: .3rem;
+    padding-left: .2rem;
     padding-right: 0.8rem;
 }
 
@@ -48,3 +103,36 @@ body {
     color: rgb(136, 18, 128);
 }
 
+.ancestor {
+    color: rgb(136, 18, 128);
+}
+
+.ancestor-attr {
+    padding-left: .5rem;
+    border-color: rgb(225, 225, 225);
+    border-style: none none none solid;
+    border-width: .5px;
+    margin-left: .1rem;
+}
+
+.ancestor-attr-text{
+    color: rgb(66, 180, 180);
+}
+
+.ancestry-container {
+    border-top: .3px rgb(242, 242, 242) solid;
+}
+
+.arrow-left {
+    transform: rotate(0deg);
+    height: 8px;
+    width: 8px;
+}
+
+.arrow-left.open {
+    transform: rotate(90deg);
+    height: 8px;
+    width: 8px;
+    padding-bottom: .7rem;
+    padding-right: 0.3rem;
+}

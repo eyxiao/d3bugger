@@ -2,23 +2,26 @@
 <html>
 
 <head>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
 	<link rel="stylesheet" href="panel.css">
+	<script src="lib/jquery-3.5.0.min.js"></script>
+	<!-- <script src="lib/bootstrap.min.js"></script> -->
 	<link href="https://fonts.googleapis.com/css?family=Inconsolata&display=swap" rel="stylesheet">
 	<!-- <script src="activate-hover-bundle.js"></script> for browserify -->
 </head>
 
 <body>
-	<div class="btn-group btn-group-toggle" data-toggle="buttons">
-		<label class="btn btn-secondary active">
-		  <input type="radio" name="options" id="hover" autocomplete="off" checked> Hover
-		</label>
-		<label class="btn btn-secondary">
-		  <input type="radio" name="options" id="click" autocomplete="off"> Click
-		</label>
-		<label class="btn btn-secondary">
-		  <input type="radio" name="options" id="off" autocomplete="off"> Off
-		</label>
+	<div class="btn-panel">
+		<div class="btn-group">
+			<input type="radio" name="options" id="button-hover" autocomplete="off" checked>
+			<label for="button-hover">Hover</label>
+
+			<input type="radio" name="options" id="button-click" autocomplete="off">
+			<label for="button-click">Click</label>
+
+			<input type="radio" name="options" id="button-off" autocomplete="off">
+			<label for="button-off">Off</label>
+		</div>
 	</div>
 
 	<div id="panel-html-breakdown" class="panel info-panel">

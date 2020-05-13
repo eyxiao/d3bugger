@@ -20,8 +20,7 @@
             "js": [
                 "lib/jquery-3.5.0.min.js",
                 "lib/d3.js",
-                "content-script.js"
-            ]
+                "content-script.js"            ]
         }
     ],
     "background": {
