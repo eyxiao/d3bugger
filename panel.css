@@ -23,6 +23,8 @@ pre {
     color: rgb(90, 90, 90);
     margin: 0;
     font-size: .7rem;
+    display: inline;
+    white-space: pre-wrap;
 }
 
 /* .info-panel {
@@ -93,7 +95,7 @@ pre {
     padding-top: .3rem;
     padding-left: 1rem;
     padding-right: 0.8rem;
-    overflow: auto; 
+    transition: height 1s;
 }
 
 .ancestor-entry {
@@ -135,6 +137,7 @@ pre {
     transform: rotate(0deg);
     height: 8px;
     width: 8px;
+    cursor: pointer;
 }
 
 .arrow-left.open {
@@ -143,6 +146,7 @@ pre {
     width: 8px;
     padding-bottom: .7rem;
     padding-right: 0.3rem;
+    cursor: pointer;
 }
 
 /* Highlight toggle */
@@ -188,11 +192,11 @@ pre {
   }
   
   input:checked + .slider {
-    background-color: rgb(66, 180, 180);
+    background-color: rgb(252, 211, 3);
   }
   
   input:focus + .slider {
-    box-shadow: 0 0 1px rgb(66, 180, 180);
+    box-shadow: 0 0 1px rgb(252, 211, 3);
   }
   
   input:checked + .slider:before {
