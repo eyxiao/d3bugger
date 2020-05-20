@@ -2,12 +2,10 @@
 
 ## Testing the extension:
 
-1. To build D3 Debugger, first clone this repository and navigate to the cloned folder. Then, install dependencies via NPM.
+1. To install D3 Debugger, first clone this repository locally.
 
 ```
-git clone git@github.mit.edu:6894-sp20/FP-demystifying-d3.git
-cd FP-demystifying-d3
-npm install
+git clone git@github.com:eyxiao/d3bugger.git
 ```
 
 2. Navigate to **chrome://extensions** in your browser, enable developer mode by clicking on the **Developer Mode** toggle in the upper righthand corner, click "**Load unpacked extension...**", and select the cloned folder (FP-demystifying-d3).
