@@ -8,7 +8,7 @@
 git clone git@github.com:eyxiao/d3bugger.git
 ```
 
-2. Navigate to **chrome://extensions** in your browser, enable developer mode by clicking on the **Developer Mode** toggle in the upper righthand corner, click "**Load unpacked extension...**", and select the cloned folder (FP-demystifying-d3).
+2. Navigate to **chrome://extensions** in your browser, enable developer mode by clicking on the **Developer Mode** toggle in the upper righthand corner, click "**Load unpacked extension...**", and select the cloned folder (d3bugger).
 
 3. Now, you can inspect a page, and there should be a panel called '**D3 Debugger**' if you click the double arrow at the top left corner of the inspector. You can then go to a page with a D3 visualization and hover over elements in the visualization to inspect them!
 
