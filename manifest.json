@@ -1,7 +1,7 @@
 {
     "name": "D3 Debugger",
     "version": "0.1",
-    "description": "A bare-bones example of communication between devtools and an inspected page",
+    "description": "An in-browser inspecting tool for d3.js.",
     "devtools_page": "devtools.html",
     "icons": {
         "16": "img/icon16.png",
